@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    
+ <title>movie App!</title>
+  </head>
+  <body style="background-color: rgba(12, 2, 47, 0.931);" >
+    <div>
+    <nav class="navbar navbar-expand-lg navbar-light "id="navbar">
+      <a class="navbar-brand" href="file:///C:/Users/Nemly-Emer/Desktop/bootstrap-4.5.3-dist/10app_movie-APP.html"><em><b style="font-size: 2em;color: blueviolet;">Movie+</b></em></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link text-light" href="#">Accueil<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#">Séries</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Films
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light " href="#" tabindex="-1" aria-disabled="true">My_liste</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0 "id="form">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search"id="search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit"id="submit">Search</button>
+        </form>
+      </div>
+    </nav></div>
+
+    <div class="container-fluid">
+      
+    <main  >
+     
+    </main>
+  </div>
+<style>  
+ main{display: flex;
+ flex-wrap: wrap;
+ padding-top:5em ;
+ padding: 1px;
+}
+  .movie{cursor: pointer;
+         width: 300px;
+         color: white;
+         box-shadow: rgb(81, 16, 165);
+         font-family: sans-serif;
+         font-style: normal;
+         background-color: rgb(81, 16, 165);
+         margin: 1rem;
+         position: relative;
+         overflow: hidden;
+         }
+         .movie img{height: 400px;
+           max-width: 100%;
+           background-color:rgb(81, 16, 165) ;
+           padding-left: 15px;
+           padding-top: 6px;
+             }
+         .movie_info{background-color: rgb(81, 16, 165);
+         margin: 0;
+         display: flex;
+         justify-content: space-between;
+         padding: 1rem;}
+         .movie_info span{background-color: rgb(40, 2, 102);
+         padding: 0.25rem 1rem 1rem;height: 40px;}
+         .movie_info span.green{color: rgb(9, 241, 9);}
+         .movie_info span.orange{color:orange;}
+         .movie_info span.red{color: rgba(199, 8, 8, 0.733);}
+         .movie_info h3{margin: 0;
+         letter-spacing: 0.5;}
+         #navbar{background-color: rgb(125, 125, 233);width: 100%;}
+        .overview{position: absolute;
+        
+        left: 0;
+        right: 0;
+        bottom: 0;
+        max-height: 100%;
+        overflow: hidden;
+        padding: 2rem;
+        background-color:rgba(12, 2, 47, 0.931);
+        transform: translateY(100%);
+        transition:  .3s ;
+        cursor: pointer;}
+      
+      .movie:hover .overview{transform: translateY(0);
+      cursor: pointer;}
+</style>
+
+<script>
+  const main=document.querySelector("main")
+  const key="04c35731a5ee918f014970082a0088b1"
+  const url="https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1"
+  const imgs="http://image.tmdb.org/t/p/w1280"
+  const search=document.getElementById("search");
+  const submit=document.getElementById("submit");
+  const form=document.getElementById("form");
+  const SEARCHAPI =
+    "https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=";
+ getMovie(url);
+    async function getMovie(url){
+  const resp=await fetch(url);
+  const respdata =await resp.json();
+  console.log(respdata);
+showMovie(respdata.results);}
+  /*respdata.results.forEach((movie) => {
+    const{poster_path,title,vote_average}=movie;
+    const movieLI=document.createElement("div");
+  movieLI.classList.add("movie")
+  movieLI.innerHTML=`
+   <img src="${imgs+poster_path}" alt="${title}">
+      <div class="movie_info">
+        <h3>${title}</h3>
+        <span class="${RATE(vote_average)}">${vote_average}</span></div>
+      `
+      main.appendChild(movieLI)
+    return respdata;
+  });
+}
+*/
+
+function showMovie(movies)
+{main.innerHTML="";
+  movies.forEach((movi) => {
+    const{poster_path,title,vote_average,overview}=movi;
+    const movieLI=document.createElement("div");
+  movieLI.classList.add("movie")
+  movieLI.innerHTML=`
+   <img src="${imgs+poster_path}" alt="${title}">
+      <div class="movie_info">
+        <h3>${title}</h3>
+        <span class="${RATE(vote_average)}">${vote_average}</span></div>
+<div class ="overview"><h3>Overview :</h3>${overview}</div>
+      `
+      main.appendChild(movieLI)
+    
+  });}
+function RATE(vote){if(vote>=8){return "green"}else if(vote>=6){return "orange"}else{return "red"}}
+form.addEventListener("submit",(e)=>{
+  e.preventDefault();
+  const searchItem=search.value
+  if(searchItem){
+  getMovie(SEARCHAPI+searchItem);
+  search.value="";
+
+}})
+</script>
+<!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+   <script src="js/bootstrap.min.js"></script>
+
+  </body>
+</html>
